@@ -27,12 +27,6 @@ The script is designed with efficiency and clarity in mind. It utilizes a struct
 
 The `run.sh` file is the entry point for executing the script, invoking the main mining program, which is capable of autonomously performing all necessary tasks to mine a block.
 
-## Solution Execution
-
-To execute the solution:
-
-```bash
-./run.sh
 
 Transaction and Block Functions
 calculate_txid(transaction): Generates a unique transaction identifier using SHA-256 hashing.
