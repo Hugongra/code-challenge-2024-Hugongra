@@ -267,7 +267,6 @@ def mine_block(transactions, previous_block_hash, timestamp):
             return json.dumps(block_header), block_hash
         nonce += 1
 
-# Assuming calculate_merkle_root and create_block_header are defined elsewhere in your script
 def write_output(block_header, coinbase_transaction, transactions, total_fee_collected, block_subsidy):
     try:
         with open('output.txt', 'w') as f:
@@ -285,7 +284,7 @@ def write_output(block_header, coinbase_transaction, transactions, total_fee_col
             # Report total fee collected
             f.write(f"\nTotal Fee Collected: {total_fee_collected} satoshis\n")
 
-            # Now, let's include the block subsidy in the output file
+            # Include the block subsidy in the output file
             f.write(f"Block Subsidy: {block_subsidy} BTC\n")
 
             # Calculate the total miner's reward (block subsidy + total fees)
