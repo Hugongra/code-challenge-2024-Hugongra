@@ -21,7 +21,7 @@ The objectives of this script are as follows:
 - **Mining Simulation**: To implement the proof-of-work algorithm and mine the block with a hash that is less than the specified difficulty target.
 - **Output Generation**: To produce a correctly formatted `output.txt` file that encapsulates the results of the mining process.
 
-## Usage
+## Solution
 
 Ensure that you have a directory containing valid transaction JSON files. The default directory is set to mempool.
 Run the script using the following command: `python main.py`
@@ -139,6 +139,7 @@ Prepares the specific data to be signed for a transaction, excluding witness inf
   - `vin (dict)`: The input of the transaction to be signed.
 - **Returns**:
   - The data ready to be signed as a byte string.
+    
 ### Function `read_transactions(mempool_dir)`
 Reads and validates transactions from a specified directory containing transaction files in JSON format.
 - **Parameters**:
@@ -216,11 +217,5 @@ The blockchain mining simulation script demonstrates the following key functiona
 - **Mining Simulation**: Implements a simulated proof-of-work mining process, including nonce finding to meet a difficulty target.
 - **Output Generation**: Detailed information about mined blocks, including headers and transaction details, is written to an output file.
 
-## Installation
 
-To set up the simulation environment on your local machine, follow these steps:
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourgithubusername/blockchain-mining-simulation.git
 
