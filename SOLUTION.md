@@ -23,25 +23,63 @@ The objectives of this script are as follows:
 
 ### Design and Execution
 
-The script is designed with efficiency and clarity in mind. It utilizes a structured approach to navigate through the challenge's requirements, ensuring that each step, from reading transactions to mining the block, is both logical and optimized for performance.
+Reads transactions from a specified directory in JSON format
+Validates transactions based on required fields and script types
+Selects transactions for a block based on their fees and virtual sizes (vsize)
+Creates a coinbase transaction rewarding the miner with the block subsidy and transaction fees
+Mines the block by finding a valid nonce that satisfies the difficulty target
+Writes the block header, serialized coinbase transaction, transaction IDs, total fee collected, block subsidy, and total miner's reward to an output fileç
 
-The `run.sh` file is the entry point for executing the script, invoking the main mining program, which is capable of autonomously performing all necessary tasks to mine a block.
+## Prerequisites
 
+Python 3.11
+ecdsa library (install using pip install ecdsa)
 
-Transaction and Block Functions
-calculate_txid(transaction): Generates a unique transaction identifier using SHA-256 hashing.
-calculate_merkle_root(tx_hashes): Calculates the Merkle root from transaction hashes, essential for efficient and secure block verification.
-validate_transaction(transaction): Ensures each transaction complies with the network's rules, such as having the necessary fields and valid transaction values.
-Mining and Block Creation
-mine_block(transactions, previous_block_hash, timestamp): Attempts to mine a block by finding a nonce that results in a hash under the target difficulty. This function also handles the creation of block headers and integrates the Merkle root of included transactions.
-create_block_header(version, previous_block_hash, merkle_root, timestamp, nonce, target): Constructs a block header, which is essential for linking blocks securely in the blockchain.
-create_coinbase_transaction(block_height, total_fee_collected): Generates a coinbase transaction, providing the miner with block rewards and collected transaction fees.
-Utility and Helper Functions
-calculate_total_bytes(tx) and calculate_vsize(tx): These functions calculate the total size and virtual size of transactions, respectively, catering to both legacy and SegWit transactions.
-select_transactions(transactions): Filters and selects transactions for a new block based on their fee rate per virtual size, optimizing block space utilization and miner profitability.
-Contributing
-Contributions to this project are welcome. Please fork the repository, make your changes, and submit a pull request.
+##Usage
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Ensure that you have a directory containing valid transaction JSON files. The default directory is set to mempool.
+Run the script using the following command:
+Copy codepython main.py
 
+The script will read the transactions from the specified directory, validate them, select transactions for the block, create a coinbase transaction, mine the block, and write the output to a file named output.txt.
+Check the output.txt file for the block details, including the block header, serialized coinbase transaction, transaction IDs, total fee collected, block subsidy, and total miner's reward.
+
+pythonCopy codeimport os
+import json
+import hashlib
+import time
+import random
+from ecdsa import VerifyingKey, SECP256k1, BadSignatureError, util
+This part of the code imports the necessary libraries and modules:
+
+os: Provides a way to interact with the operating system.
+json: Allows working with JSON data.
+hashlib: Provides hash functions for cryptographic purposes.
+time: Allows working with timestamps and time-related functions.
+random: Generates random numbers.
+ecdsa: Provides support for Elliptic Curve Digital Signature Algorithm (ECDSA).
+
+pythonCopy codemempool_dir = 'mempool'
+This line sets the directory name for the mempool, which is a directory where unconfirmed transactions are stored.
+pythonCopy codeprevious_block_hash = '0' * 64
+block_height = 1
+timestamp_variation = random.randint(-3600, 3600)
+current_time = int(time.time()) + timestamp_variation
+These lines initialize some variables:
+
+previous_block_hash: Represents the hash of the previous block. It is initially set to a string of 64 zeros.
+block_height: Represents the height or index of the current block. It starts at 1.
+timestamp_variation: Generates a random timestamp variation between -3600 and 3600 seconds.
+current_time: Calculates the current timestamp by adding the timestamp variation to the current time.
+
+pythonCopy codedef double_sha256(hex_str):
+    return hashlib.sha256(hashlib.sha256(bytes.fromhex(hex_str)).digest()).hexdigest()
+This function takes a hexadecimal string as input, performs a double SHA-256 hash on it, and returns the resulting hash as a hexadecimal string.
+def calculate_merkle_root(tx_hashes):
+  
+This function calculates the Merkle root of a list of transaction hashes using a recursive approach. It concatenates pairs of hashes, calculates their double SHA-256 hash, and repeats the process until a single hash (the Merkle root) is obtained.
+
+pythonCopy codedef calculate_txid(transaction):
+    
+This function calculates the transaction ID (TXID) of a given transaction. It converts the transaction to a JSON string with sorted keys, performs a double SHA-256 hash on the encoded string, and returns the resulting hash as a hexadecimal string.
+These are the initial parts of the code that set up the necessary imports, variables, and helper functions for the blockchain implementation.
