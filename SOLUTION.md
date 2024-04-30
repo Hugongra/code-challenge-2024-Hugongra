@@ -35,10 +35,10 @@ Writes the block header, serialized coinbase transaction, transaction IDs, total
 Python 3.11
 ecdsa library (install using pip install ecdsa)
 
-##Usage
+## Usage
 
 Ensure that you have a directory containing valid transaction JSON files. The default directory is set to mempool.
-Run the script using the following command: (python main.py)
+Run the script using the following command: ('python main.py')
 
 The script will read the transactions from the specified directory, validate them, select transactions for the block, create a coinbase transaction, mine the block, and write the output to a file named output.txt.
 Check the output.txt file for the block details, including the block header, serialized coinbase transaction, transaction IDs, total fee collected, block subsidy, and total miner's reward.
