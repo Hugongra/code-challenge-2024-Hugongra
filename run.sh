@@ -1,1 +1,4 @@
-pyhton main.py 
+#!/bin/bash
+
+make build
+make run
